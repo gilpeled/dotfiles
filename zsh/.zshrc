@@ -121,7 +121,6 @@ export PATH="$PATH:$HOME/Library/Android/sdk/platform-tools"
 
 export ANDROID_HOME=$HOME/Library/Android/sdk
 export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH
-eval "$(zoxide init zsh --cmd cd)"
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
@@ -136,3 +135,7 @@ alias omo="opencode"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
+
+# zoxide must be initialized last — it overrides `cd`, and any later PATH
+# manipulation can shadow it. _ZO_DOCTOR will warn if anything follows.
+eval "$(zoxide init zsh --cmd cd)"
