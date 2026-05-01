@@ -1,0 +1,116 @@
+[user]
+    name = Gil Peled
+    email = gil.peled@hellosimply.com
+    editor = vim
+
+[alias]
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative
+    last = cat-file commit HEAD
+    st = ls-files --exclude-per-directory=.gitignore --exclude-from=.git/info/exclude -t -o -u -s -m -d
+    stc = diff --stat --name-status --cached
+    top = !eval cd "$(pwd)/$(git rev-parse --show-cdup)" && pwd
+    amend = commit --amend -C HEAD
+    su = submodule update
+    sui = submodule update --init
+    seturl = remote set-url origin
+    rbc = rebase --continue
+    rba = rebase --abort
+    log1 = log --pretty=oneline --abbrev-commit --decorate
+
+[core]
+    whitespace = trailing-space,space-before-tab,indent-with-non-tab,cr-at-eol
+    editor = vim
+    autocrlf = input
+    excludesfile = ~/.gitignore_global
+    pager = delta
+
+[init]
+    defaultBranch = main
+
+[column]
+    ui = auto
+
+[branch]
+    sort = -committerdate
+    autosetuprebase = always
+
+[tag]
+    sort = version:refname
+
+[diff]
+    algorithm = histogram
+    colorMoved = default
+    mnemonicPrefix = true
+    renames = true
+    submodule = log
+
+[diff "localizablestrings"]
+    textconv = "iconv -f utf-16 -t utf-8"
+
+[push]
+    default = simple
+    autoSetupRemote = true
+    followTags = true
+
+[pull]
+    rebase = true
+
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true
+
+[help]
+    autocorrect = prompt
+
+[commit]
+    verbose = true
+
+[rerere]
+    enabled = true
+    autoupdate = true
+
+[rebase]
+    autoSquash = true
+    autoStash = true
+    updateRefs = true
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    side-by-side = true
+    line-numbers = true
+
+[merge]
+    conflictstyle = zdiff3
+
+[status]
+    submoduleSummary = true
+    showUntrackedFiles = no
+
+[color]
+    pager = true
+    ui = auto
+[color "branch"]
+    current = yellow reverse
+    local = yellow
+    remote = green
+[color "diff"]
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
+[color "status"]
+    added = yellow
+    untracked = cyan
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+
+[include]
+    path = ~/.gitconfig.local

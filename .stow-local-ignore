@@ -1,0 +1,13 @@
+(^|/)\.git(/|$)
+(^|/)\.gitignore$
+(^|/)\.stow-local-ignore$
+(^|/)README\.md$
+(^|/)AGENTS\.md$
+(^|/)LICENSE$
+(^|/)Brewfile$
+(^|/)Brewfile\.lock\.json$
+(^|/)install\.sh$
+(^|/)\.DS_Store$
+(^|/)homework(/|$)
+(^|/)scripts(/|$)
+(^|/)shims(/|$)
