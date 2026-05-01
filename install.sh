@@ -295,7 +295,8 @@ print_summary() {
 
 Manual TODOs:
   1. Sign into the Mac App Store (so `mas` can install Xcode etc.).
-  2. Run `gh auth login` to authenticate with GitHub.
+  2. Run `gh auth login` then `gh auth setup-git` (so plain `git push` over HTTPS works).
+     Or: switch your remotes to SSH (`git remote set-url origin git@github.com:OWNER/REPO.git`).
   3. Run `./scripts/clone-repos.sh` to clone work repos into ~/repos.
   4. System Settings → Privacy & Security — grant permissions:
        - Aerospace      (Accessibility)
