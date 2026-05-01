@@ -8,7 +8,7 @@ This repo's `.zshrc` already initializes zoxide with `eval "$(zoxide init zsh --
 
 ## Why you'll like it
 
-- `cd simp` jumps to `~/gitRepos/SimplyPiano` because that's where you actually live.
+- `cd simp` jumps to `~/repos/SimplyPiano` because that's where you actually live.
 - Falls back to normal `cd` for anything that's a real path. Never breaks.
 - `cd -` still goes to the previous directory. `cd ..` still goes up.
 - `zi` opens an `fzf`-style interactive picker over your history.
@@ -50,11 +50,11 @@ eval "$(zoxide init zsh --cmd cd)"
 
 ```bash
 # Walk into a few directories so zoxide learns them
-cd ~/dotfiles && cd ~/gitRepos/SimplyPiano && cd ~
+cd ~/dotfiles && cd ~/repos/SimplyPiano && cd ~
 
 # Now jump
 cd dot         # → ~/dotfiles
-cd simp        # → ~/gitRepos/SimplyPiano
+cd simp        # → ~/repos/SimplyPiano
 cd home        # back to ~
 
 # Inspect the database

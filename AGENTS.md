@@ -24,7 +24,7 @@ dotfiles/
 ├── Brewfile               # Homebrew formulas, casks, mas apps
 ├── scripts/
 │   ├── macos/             # Run by install.sh (macos-defaults.sh, ...)
-│   └── clone-repos.sh     # Clone work repos into ~/gitRepos
+│   └── clone-repos.sh     # Clone work repos into ~/repos
 ├── shims/macos/           # OS-specific binary wrappers (~/.local/bin)
 ├── homework/              # Reference reading (not stowed)
 ├── zsh/                   # .zshrc, .p10k.zsh

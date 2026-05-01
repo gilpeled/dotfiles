@@ -74,7 +74,7 @@ git diff | delta --no-gitconfig --color-only=false > diff.txt
 
 ```bash
 # In any repo, make a small change and view the diff
-cd ~/gitRepos/SimplyPiano
+cd ~/repos/SimplyPiano
 git status
 git diff                    # side-by-side syntax-highlighted
 

@@ -47,7 +47,7 @@ alias lt='eza --tree --level=2 --git-ignore'
 
 ```bash
 # A directory you actually have
-eza -la --git --icons --group-directories-first ~/gitRepos/SimplyPiano
+eza -la --git --icons --group-directories-first ~/repos/SimplyPiano
 
 # Tree view of the dotfiles repo, ignoring .gitignored stuff
 eza --tree --level=3 --git-ignore ~/dotfiles

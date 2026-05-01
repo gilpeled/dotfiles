@@ -26,7 +26,7 @@ After `install.sh` completes:
 
 1. Sign in to the Mac App Store (so `mas` can install Xcode etc.).
 2. `gh auth login` — authenticate with GitHub.
-3. `./scripts/clone-repos.sh` — clone work repos into `~/gitRepos/`.
+3. `./scripts/clone-repos.sh` — clone work repos into `~/repos/`.
 4. Open **System Settings → Privacy & Security** and grant permissions for Aerospace (Accessibility), Tailscale (Network Extensions), Amphetamine (Accessibility), Mounty (Disk), 1Password (auto-fill).
 
 ## Structure

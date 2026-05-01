@@ -45,16 +45,16 @@ If installed via the dotfiles Brewfile, no action. Otherwise: `brew install ripg
 
 ```bash
 # Find every TODO in your iOS repo
-rg TODO ~/gitRepos/SimplyPiano
+rg TODO ~/repos/SimplyPiano
 
 # Only Swift files mentioning 'AVAudioEngine'
-rg -t swift AVAudioEngine ~/gitRepos/SimplyPiano
+rg -t swift AVAudioEngine ~/repos/SimplyPiano
 
 # Files referencing a string but not the count
-rg -l 'NSLocalizedString' ~/gitRepos/SimplyPiano | head
+rg -l 'NSLocalizedString' ~/repos/SimplyPiano | head
 
 # Count usages of `print(` in your Python projects
-rg -c 'print\(' --type py ~/gitRepos | head
+rg -c 'print\(' --type py ~/repos | head
 
 # Pipe into fzf for interactive grep
 rg --line-number --no-heading --color=always foo \

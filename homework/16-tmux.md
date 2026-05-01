@@ -15,7 +15,7 @@ This repo's `~/.tmux.conf` uses the **default prefix `Ctrl-b`**. Some configs re
 ## Why you'll like it
 
 - Detach (`Ctrl-b d`) and reattach (`tmux attach`) — work survives terminal crashes, reboot-less laptop closing, SSH disconnects.
-- Splits are scriptable: `tmux split-window -h -c ~/gitRepos/SimplyPiano` sets up a layout for a project.
+- Splits are scriptable: `tmux split-window -h -c ~/repos/SimplyPiano` sets up a layout for a project.
 - This repo's config sets `mouse on`, so you can click panes / resize with the mouse if you want — but the keys work the same.
 - Vi-mode copy: `Ctrl-b [` enters scroll/copy mode, `v` selects, `y` yanks to system clipboard.
 - Window bars at the bottom show what's running where.
@@ -65,7 +65,7 @@ Everything in tmux starts with the **prefix key**: `Ctrl-b`. Press it, release, 
 - **The prefix is a chord, not a hold.** `Ctrl-b d` means: hold Ctrl, tap b, release Ctrl, then tap d. Beginners hold Ctrl through the whole thing — that breaks.
 - Detach is **not** quit. `Ctrl-b d` leaves the session running. To actually kill it, `tmux kill-session` or `exit` every shell inside.
 - Inside copy mode (`Ctrl-b [`), this repo uses **vi keys**: `h/j/k/l` to move, `v` to start selection, `y` to copy. Outside copy mode, it's still your normal shell.
-- Splits inherit the cwd of the parent pane (this repo configures `-c "#{pane_current_path}"`). So splitting in `~/gitRepos/SimplyPiano` opens the new pane there.
+- Splits inherit the cwd of the parent pane (this repo configures `-c "#{pane_current_path}"`). So splitting in `~/repos/SimplyPiano` opens the new pane there.
 - iTerm2 already has tabs and splits — feels redundant at first. The point of tmux is **persistence**: iTerm splits die when iTerm dies; tmux splits survive.
 
 ## A 5-minute first session

@@ -10,7 +10,7 @@
 - Interactive mode: arrow keys, see size right next to each subdir, drill in, navigate up.
 - Delete inside the TUI with `d`. Big "are you sure" guard.
 - Reports in MB/GB/MiB/GiB depending on flags. Sensible defaults.
-- Works on any path: `dua i ~/gitRepos` to find which repo has bloated `node_modules`.
+- Works on any path: `dua i ~/repos` to find which repo has bloated `node_modules`.
 
 ## Install
 
@@ -58,10 +58,10 @@ dua i ~
 dua i ~/Library
 
 # Find the biggest repo on disk
-dua i ~/gitRepos
+dua i ~/repos
 
 # One-shot, no TUI — useful in scripts or CI
-dua ~/gitRepos | head -20
+dua ~/repos | head -20
 
 # Combine with sort/grep if you want quick numbers
 dua --apparent-size ~/Downloads | sort -h

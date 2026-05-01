@@ -45,7 +45,7 @@ glow ~/dotfiles/README.md
 glow ~/dotfiles/homework
 
 # Read SimplyPiano's README without leaving the terminal
-glow ~/gitRepos/SimplyPiano/README.md
+glow ~/repos/SimplyPiano/README.md
 
 # Pull a remote README and render it
 curl -s https://raw.githubusercontent.com/charmbracelet/glow/master/README.md | glow -

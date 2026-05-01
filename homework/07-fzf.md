@@ -53,7 +53,7 @@ Searching syntax inside the picker (works in `Ctrl-R` too):
 # In any shell, type Ctrl-R and start typing 'git' — fuzzy history search.
 
 # Pick a file from your iOS repo and open it
-vim $(fzf --preview 'bat --color=always --line-range :200 {}' < <(fd -t f . ~/gitRepos/SimplyPiano))
+vim $(fzf --preview 'bat --color=always --line-range :200 {}' < <(fd -t f . ~/repos/SimplyPiano))
 
 # Multi-select branches and check one out
 git branch | fzf -m

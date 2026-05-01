@@ -296,7 +296,7 @@ print_summary() {
 Manual TODOs:
   1. Sign into the Mac App Store (so `mas` can install Xcode etc.).
   2. Run `gh auth login` to authenticate with GitHub.
-  3. Run `./scripts/clone-repos.sh` to clone work repos into ~/gitRepos.
+  3. Run `./scripts/clone-repos.sh` to clone work repos into ~/repos.
   4. System Settings → Privacy & Security — grant permissions:
        - Aerospace      (Accessibility)
        - Tailscale      (Network Extensions)
