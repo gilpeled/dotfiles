@@ -293,7 +293,24 @@ print_summary() {
 ============================================================
 ✅ Bootstrap complete!
 
-Manual TODOs:
+⚠️  IMPORTANT — DO THIS FIRST:
+
+   Your CURRENT shell still has the old PATH. Tools installed by
+   this run (gh, brew, mas, eza, bat, etc.) are NOT available in
+   this terminal until you start a fresh shell. This is the most
+   common gotcha — without it, the manual TODOs below will hit
+   "command not found".
+
+   Run this NOW to reload in place:
+
+       exec zsh -l
+
+   Or: quit and reopen your terminal app.
+
+------------------------------------------------------------
+
+Then, in the fresh shell, do the manual TODOs:
+
   1. Sign into the Mac App Store (so `mas` can install Xcode etc.).
   2. Run `gh auth login` then `gh auth setup-git` (so plain `git push` over HTTPS works).
      Or: switch your remotes to SSH (`git remote set-url origin git@github.com:OWNER/REPO.git`).
@@ -307,8 +324,6 @@ Manual TODOs:
   5. Launch `aerospace` once manually so it requests permissions.
   6. (Optional) Run `p10k configure` to re-customize the prompt.
      The `.p10k.zsh` file is checked in; this is only if you want to change it.
-
-Open a new shell to apply changes.
 ============================================================
 EOF
 }
