@@ -1,7 +1,7 @@
 # Generated/curated for gilpeled. Update via: brew bundle dump --describe --mas --force
 
 ### Taps
-tap "anomalyco/tap"
+tap "rtk-ai/homebrew-tap"
 tap "nikitabobko/tap"
 tap "oven-sh/bun"
 tap "felixkratz/formulae"
@@ -43,7 +43,7 @@ brew "xcodegen"
 brew "xdelta"
 brew "yt-dlp"
 brew "zoxide"
-brew "anomalyco/tap/rtk"
+brew "rtk-ai/homebrew-tap/rtk"
 brew "felixkratz/formulae/borders"
 brew "oven-sh/bun/bun"
 
