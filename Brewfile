@@ -49,7 +49,9 @@ brew "oven-sh/bun/bun"
 
 ### Casks
 cask "1password"
-cask "amphetamine"
+# amphetamine is Mac-App-Store-only. After signing into MAS, install via:
+#   mas install 937984704
+# (or open Mac App Store, search "Amphetamine", click install)
 cask "android-studio"
 cask "asana"
 cask "audacity"
