@@ -57,7 +57,8 @@ HEADER
 
 echo
 echo "# === Keyboard & input ==="
-emit_bool   NSGlobalDomain ApplePressAndHoldEnabled
+echo "# Hold-key repeats instead of opening accent menu (baseline — always emitted)"
+echo "defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false"
 emit_int    NSGlobalDomain KeyRepeat
 emit_int    NSGlobalDomain InitialKeyRepeat
 emit_int    NSGlobalDomain AppleKeyboardUIMode
@@ -118,12 +119,13 @@ done
 
 echo
 echo "# === Window Manager (Stage Manager + native tiling — Aerospace requirements) ==="
-emit_bool   com.apple.WindowManager GloballyEnabled
-emit_bool   com.apple.WindowManager EnableStandardClickToShowDesktop
-emit_bool   com.apple.WindowManager EnableTiledWindowMargins
-emit_bool   com.apple.WindowManager EnableTilingByEdgeDrag
-emit_bool   com.apple.WindowManager EnableTilingOptionAccelerator
-emit_bool   com.apple.WindowManager EnableTopTilingByEdgeDrag
+echo "# Baseline — always emitted regardless of host state."
+echo "defaults write com.apple.WindowManager GloballyEnabled -bool false"
+echo "defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false"
+echo "defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false"
+echo "defaults write com.apple.WindowManager EnableTilingByEdgeDrag -bool false"
+echo "defaults write com.apple.WindowManager EnableTilingOptionAccelerator -bool false"
+echo "defaults write com.apple.WindowManager EnableTopTilingByEdgeDrag -bool false"
 emit_bool   com.apple.WindowManager HideDesktop
 
 echo
