@@ -348,6 +348,27 @@ main() {
   apply_macos_defaults
   setup_rtk
   print_summary
+  maybe_reload_shell
+}
+
+# Offer to reload the shell so the user doesn't hit "command not found"
+# on the manual TODOs that just got installed (gh, mas, etc.).
+# Skipped on --dry-run, on non-interactive runs (CI / piped input), and
+# on any answer other than Y/y/yes/<empty>.
+maybe_reload_shell() {
+  [[ $DRY_RUN -eq 1 ]] && return 0
+  [[ -t 0 && -t 1 ]] || return 0
+  echo
+  read -r -p "Reload your shell now (recommended)? [Y/n] " reply
+  case "${reply:-y}" in
+    y|Y|yes|YES)
+      log_info "exec \"\$SHELL\" -l"
+      exec "${SHELL:-zsh}" -l
+      ;;
+    *)
+      log_skip "Skipping reload. Run 'exec \$SHELL -l' yourself when you're ready."
+      ;;
+  esac
 }
 
 main "$@"
