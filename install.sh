@@ -270,6 +270,45 @@ apply_macos_defaults() {
   run bash "$script"
 }
 
+# === Stage 11b: install AI CLIs that aren't on Homebrew ===
+# opencode and Claude Code ship via their own installers / npm; not via brew.
+install_ai_clis() {
+  # opencode → ~/.opencode/bin/opencode (the .zshrc already puts that on PATH)
+  if [[ -x "$HOME/.opencode/bin/opencode" ]]; then
+    log_skip "opencode already installed"
+  else
+    log_info "Installing opencode..."
+    if [[ $DRY_RUN -eq 1 ]]; then
+      echo "  [dry-run] curl -fsSL https://opencode.ai/install | bash"
+    else
+      curl -fsSL https://opencode.ai/install | bash
+    fi
+    log_ok "opencode installed"
+  fi
+
+  # opencode plugins (oh-my-openagent etc.) listed in ~/.config/opencode/package.json
+  if [[ -f "$HOME/.config/opencode/package.json" ]] && have bun; then
+    if [[ -d "$HOME/.config/opencode/node_modules" ]]; then
+      log_skip "opencode plugins already installed"
+    else
+      log_info "Installing opencode plugins..."
+      run bash -c "cd \"$HOME/.config/opencode\" && bun install"
+      log_ok "opencode plugins installed"
+    fi
+  fi
+
+  # Claude Code → npm global (provides the `claude` command)
+  if have claude; then
+    log_skip "Claude Code already installed"
+  elif have npm; then
+    log_info "Installing Claude Code (@anthropic-ai/claude-code)..."
+    run npm install -g @anthropic-ai/claude-code
+    log_ok "Claude Code installed"
+  else
+    log_warn "npm not found — skipping Claude Code install"
+  fi
+}
+
 # === Stage 12: rtk init ===
 setup_rtk() {
   if ! have rtk; then
@@ -346,6 +385,7 @@ main() {
   stow_shims
   compile_winbounds
   apply_macos_defaults
+  install_ai_clis
   setup_rtk
   print_summary
   maybe_reload_shell
