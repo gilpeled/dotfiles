@@ -325,7 +325,28 @@ setup_rtk() {
   log_ok "rtk configured"
 }
 
-# === Stage 13: final summary ===
+# === Stage 13: verify a fresh login shell loads cleanly ===
+# Catches drift like a `.zshrc` referencing a tool that isn't in Brewfile.
+# Prints the offending stderr so the user can fix it before declaring the
+# bootstrap done. Skipped on --dry-run and on non-TTY runs (e.g. CI), since
+# `zsh -i` can emit harmless option-set warnings without a real terminal.
+verify_shell_clean() {
+  [[ $DRY_RUN -eq 1 ]] && return 0
+  [[ -t 0 && -t 1 ]] || { log_skip "Not a TTY; skipping shell verification"; return 0; }
+
+  log_info "Verifying a fresh login shell loads cleanly..."
+  local errors
+  errors="$(zsh -l -i -c exit 2>&1 1>/dev/null || true)"
+  if [[ -z "$errors" ]]; then
+    log_ok "Fresh shell loads cleanly"
+    return 0
+  fi
+  log_warn "Fresh shell emitted errors — fix before considering bootstrap done:"
+  echo "$errors" | sed 's/^/    /'
+  log_warn "Common cause: a tool referenced in .zshrc is missing from Brewfile."
+}
+
+# === Stage 14: final summary ===
 print_summary() {
   cat <<'EOF'
 
@@ -387,6 +408,7 @@ main() {
   apply_macos_defaults
   install_ai_clis
   setup_rtk
+  verify_shell_clean
   print_summary
   maybe_reload_shell
 }
