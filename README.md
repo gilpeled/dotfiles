@@ -14,20 +14,40 @@ Prerequisites (install manually first):
 - Google Chrome
 - 1Password (sign in)
 
-Then:
+A fresh Mac has neither `git`, `brew`, nor `gh` available — those are installed *by* `install.sh`. So the bootstrap has a chicken-and-egg phase before the clone:
 
 ```bash
-git clone git@github.com:gilpeled/dotfiles.git ~/dotfiles
-cd ~/dotfiles
+# 1. Trigger Xcode Command Line Tools install (provides git, swiftc, etc.)
+xcode-select --install
+# Accept the dialog. Wait ~10 min.
+
+# 2. Generate an SSH key for GitHub
+ssh-keygen -t ed25519 -C "your@email"
+# Accept defaults. Passphrase optional (store in 1Password if set).
+
+# 3. Add the public key to GitHub via the web UI
+pbcopy < ~/.ssh/id_ed25519.pub
+# Open https://github.com/settings/ssh/new — paste — save.
+
+# 4. Verify SSH works
+ssh -T git@github.com
+# Expected: "Hi <username>! You've successfully authenticated…"
+
+# 5. Clone dotfiles + run installer
+mkdir -p ~/repos
+git clone git@github.com:gilpeled/dotfiles.git ~/repos/dotfiles
+cd ~/repos/dotfiles
 ./install.sh
+# Long step (~30 min). Brew bundle does the heavy lifting.
 ```
 
 After `install.sh` completes:
 
-1. Sign in to the Mac App Store (so `mas` can install Xcode etc.).
-2. `gh auth login` — authenticate with GitHub.
-3. `./scripts/clone-repos.sh` — clone work repos into `~/repos/`.
+1. Sign in to the Mac App Store (so `mas` can install Xcode and other App Store apps; brew bundle will retry on next run, or use `mas install <id>` manually).
+2. `gh auth login` and then `gh auth setup-git`.
+3. `./scripts/clone-repos.sh` — clones work repos into `~/repos/`.
 4. Open **System Settings → Privacy & Security** and grant permissions for Aerospace (Accessibility), Tailscale (Network Extensions), Amphetamine (Accessibility), Mounty (Disk), 1Password (auto-fill).
+5. Launch `aerospace` once manually so it requests its permissions.
 
 ## Structure
 
