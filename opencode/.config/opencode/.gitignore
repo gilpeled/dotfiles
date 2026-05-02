@@ -1,0 +1,14 @@
+# Track ONLY explicit configs and the plugin manifest.
+# node_modules/, runtime caches, .bak files, anything new opencode
+# writes is ignored by default.
+
+# Default-deny
+*
+
+# Whitelist
+!.gitignore
+!AGENTS.md
+!opencode.json
+!oh-my-openagent.json
+!package.json
+!bun.lock

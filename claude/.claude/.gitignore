@@ -1,21 +1,13 @@
-# Runtime state — never commit
-settings.local.json
-history.jsonl
-sessions/
-transcripts/
-cache/
-projects/
-todos/
-telemetry/
-tasks/
-backups/
-downloads/
-file-history/
-paste-cache/
-plugins/
-session-env/
-shell-snapshots/
-statsig/
-mcp-needs-auth-cache.json
-policy-limits.json
-.DS_Store
+# Track ONLY explicit configs and the commands library.
+# Anything else Claude Code writes to ~/.claude (sessions, history, caches,
+# transcripts, todos, telemetry, statsig, plugins, machine-local settings,
+# new things added in future versions) is ignored by default.
+
+# Default-deny
+*
+
+# Whitelist
+!.gitignore
+!settings.json
+!commands/
+!commands/**
