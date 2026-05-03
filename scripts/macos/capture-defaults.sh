@@ -152,6 +152,35 @@ echo "# === Screenshots ==="
 emit_string com.apple.screencapture target
 
 echo
+echo "# === Mos (mouse-only scroll customization) ==="
+echo "# Mos affects mouse wheel only; trackpad keeps macOS's natural-scroll setting."
+emit_bool   com.caldis.Mos reverse
+emit_bool   com.caldis.Mos reverseHorizontal
+emit_bool   com.caldis.Mos reverseVertical
+emit_bool   com.caldis.Mos smooth
+emit_bool   com.caldis.Mos smoothHorizontal
+emit_bool   com.caldis.Mos smoothVertical
+emit_bool   com.caldis.Mos smoothSimTrackpad
+emit_float  com.caldis.Mos speed
+emit_float  com.caldis.Mos step
+emit_float  com.caldis.Mos duration
+emit_float  com.caldis.Mos deadZone
+emit_bool   com.caldis.Mos allowlist
+emit_bool   com.caldis.Mos hideStatusItem
+emit_bool   com.caldis.Mos updateCheckOnAppStart
+emit_bool   com.caldis.Mos updateIncludingBetaVersion
+echo "# Hotkey-binding blobs (block/dash/toggle/applications/buttonBindings) are stored"
+echo "# as embedded JSON and not captured here — leave them at Mos defaults."
+echo "# Register Mos as a login item (idempotent)."
+cat <<'MOS_LOGIN'
+if [[ -d /Applications/Mos.app ]]; then
+  if ! osascript -e 'tell application "System Events" to get the name of every login item' 2>/dev/null | tr ',' '\n' | grep -qE '^[[:space:]]*Mos[[:space:]]*$'; then
+    osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Mos.app", hidden:true}' >/dev/null 2>&1 || true
+  fi
+fi
+MOS_LOGIN
+
+echo
 echo "# === Aerospace-required: disable Ctrl+1/2/3 Mission Control space-switching ==="
 echo "defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 118 '{ enabled = 0; }'"
 echo "defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 119 '{ enabled = 0; }'"

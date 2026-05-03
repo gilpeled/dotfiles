@@ -112,6 +112,32 @@ defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
 # === Screenshots ===
 defaults write com.apple.screencapture target -string clipboard
 
+# === Mos (mouse-only scroll customization) ===
+# Mos affects mouse wheel only; trackpad keeps macOS's natural-scroll setting.
+defaults write com.caldis.Mos reverse -bool true
+defaults write com.caldis.Mos reverseHorizontal -bool true
+defaults write com.caldis.Mos reverseVertical -bool true
+defaults write com.caldis.Mos smooth -bool true
+defaults write com.caldis.Mos smoothHorizontal -bool true
+defaults write com.caldis.Mos smoothVertical -bool true
+defaults write com.caldis.Mos smoothSimTrackpad -bool false
+defaults write com.caldis.Mos speed -float 2.7
+defaults write com.caldis.Mos step -float 33.6
+defaults write com.caldis.Mos duration -float 2
+defaults write com.caldis.Mos deadZone -float 1
+defaults write com.caldis.Mos allowlist -bool false
+defaults write com.caldis.Mos hideStatusItem -bool false
+defaults write com.caldis.Mos updateCheckOnAppStart -bool false
+defaults write com.caldis.Mos updateIncludingBetaVersion -bool false
+# Hotkey-binding blobs (block/dash/toggle/applications/buttonBindings) are stored
+# as embedded JSON and not captured here — leave them at Mos defaults.
+# Register Mos as a login item (idempotent).
+if [[ -d /Applications/Mos.app ]]; then
+  if ! osascript -e 'tell application "System Events" to get the name of every login item' 2>/dev/null | tr ',' '\n' | grep -qE '^[[:space:]]*Mos[[:space:]]*$'; then
+    osascript -e 'tell application "System Events" to make login item at end with properties {path:"/Applications/Mos.app", hidden:true}' >/dev/null 2>&1 || true
+  fi
+fi
+
 # === Aerospace-required: disable Ctrl+1/2/3 Mission Control space-switching ===
 defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 118 '{ enabled = 0; }'
 defaults write com.apple.symbolichotkeys AppleSymbolicHotKeys -dict-add 119 '{ enabled = 0; }'
