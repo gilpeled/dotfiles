@@ -46,7 +46,7 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeF
 # === UI & Windows ===
 # NSGlobalDomain NSAutomaticWindowAnimationsEnabled: unset
 # NSGlobalDomain NSWindowShouldDragOnGesture: unset
-defaults write NSGlobalDomain AppleWindowTabbingMode -string manual
+defaults write NSGlobalDomain AppleWindowTabbingMode -string always
 # NSGlobalDomain AppleActionOnDoubleClick: unset
 defaults write NSGlobalDomain AppleMiniaturizeOnDoubleClick -bool false
 # NSGlobalDomain CGDisableCursorLocationMagnification: unset
