@@ -124,6 +124,25 @@ export PATH=$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/tools/bin:$ANDR
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
+# === Modern CLI tooling ===
+# Aliases and integrations for the modern replacements installed via Brewfile.
+# Only `ls` is aliased — `cat`/`grep`/`find`/`du`/`top` keep POSIX semantics so
+# scripts and pipes don't surprise. Use `bat`/`rg`/`fd`/`dua`/`btop` explicitly.
+
+# eza → modern ls
+alias ls='eza --group-directories-first'
+alias ll='eza -la --git --icons --group-directories-first'
+alias lt='eza --tree --level=2 --git-ignore'
+
+# bat → syntax-highlighted man pages
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+# fzf → drive Ctrl-T / Alt-C off fd (faster, respects .gitignore) with bat preview
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git'
+export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :200 {}'"
+
 # opencode
 export PATH=$HOME/.opencode/bin:$PATH
 alias omo="opencode"

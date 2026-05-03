@@ -325,6 +325,35 @@ setup_rtk() {
   log_ok "rtk configured"
 }
 
+# === Stage 12b: modern CLI aliases ===
+# The modern-CLI block (eza/bat/fzf aliases + env vars) lives in zsh/.zshrc and
+# is propagated to ~/.zshrc by stow. We re-list the sequence here so the
+# bootstrap script is the authoritative record of what a fresh machine gets,
+# and we verify the marker survived stow — losing it silently would degrade
+# the shell ergonomics for every subsequent session.
+verify_modern_cli_aliases() {
+  local zshrc="$HOME/.zshrc"
+  local marker="# === Modern CLI tooling ==="
+  # Canonical sequence (kept in sync with zsh/.zshrc):
+  #   alias ls='eza --group-directories-first'
+  #   alias ll='eza -la --git --icons --group-directories-first'
+  #   alias lt='eza --tree --level=2 --git-ignore'
+  #   export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+  #   export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
+  #   export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+  #   export FZF_ALT_C_COMMAND='fd --type d --hidden --exclude .git'
+  #   export FZF_CTRL_T_OPTS="--preview 'bat --color=always --line-range :200 {}'"
+  if [[ ! -f "$zshrc" ]]; then
+    log_warn "~/.zshrc missing; modern CLI aliases not verified"
+    return 0
+  fi
+  if grep -qF "$marker" "$zshrc"; then
+    log_ok "Modern CLI aliases present in ~/.zshrc"
+  else
+    log_warn "Modern CLI aliases marker missing from ~/.zshrc — re-run with stow re-stowing zsh"
+  fi
+}
+
 # === Stage 13: verify a fresh login shell loads cleanly ===
 # Catches drift like a `.zshrc` referencing a tool that isn't in Brewfile.
 # Prints the offending stderr so the user can fix it before declaring the
@@ -412,6 +441,7 @@ main() {
   apply_macos_defaults
   install_ai_clis
   setup_rtk
+  verify_modern_cli_aliases
   verify_shell_clean
   print_summary
   maybe_reload_shell
