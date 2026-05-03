@@ -62,6 +62,7 @@ echo "defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false"
 emit_int    NSGlobalDomain KeyRepeat
 emit_int    NSGlobalDomain InitialKeyRepeat
 emit_int    NSGlobalDomain AppleKeyboardUIMode
+echo "# Auto-correct / smart-quotes / smart-dashes / auto-cap all OFF (annoying in code)"
 emit_bool   NSGlobalDomain NSAutomaticCapitalizationEnabled
 emit_bool   NSGlobalDomain NSAutomaticDashSubstitutionEnabled
 emit_bool   NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled
@@ -119,7 +120,8 @@ done
 
 echo
 echo "# === Window Manager (Stage Manager + native tiling — Aerospace requirements) ==="
-echo "# Baseline — always emitted regardless of host state."
+echo "# These are baseline requirements for Aerospace and are always set,"
+echo "# regardless of host state at capture time."
 echo "defaults write com.apple.WindowManager GloballyEnabled -bool false"
 echo "defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool false"
 echo "defaults write com.apple.WindowManager EnableTiledWindowMargins -bool false"
@@ -132,10 +134,13 @@ echo
 echo "# === Finder ==="
 emit_bool   com.apple.finder ShowPathbar
 emit_bool   com.apple.finder ShowStatusBar
+echo "# Search the current folder by default, not the whole Mac"
 emit_string com.apple.finder FXDefaultSearchScope
 emit_bool   com.apple.finder FXEnableExtensionChangeWarning
 emit_bool   com.apple.finder _FXShowPosixPathInTitle
+echo "# Folders sort to the top, then files"
 emit_bool   com.apple.finder _FXSortFoldersFirst
+echo "# Don't litter network shares / USB drives with .DS_Store"
 emit_bool   com.apple.desktopservices DSDontWriteNetworkStores
 emit_bool   com.apple.desktopservices DSDontWriteUSBStores
 

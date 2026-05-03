@@ -12,7 +12,7 @@ osascript -e 'tell application "System Settings" to quit' 2>/dev/null || true
 echo "Configuring macOS defaults..."
 
 # === Keyboard & input ===
-# Hold-key repeats instead of opening accent menu
+# Hold-key repeats instead of opening accent menu (baseline — always emitted)
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
@@ -46,7 +46,7 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeF
 # === UI & Windows ===
 # NSGlobalDomain NSAutomaticWindowAnimationsEnabled: unset
 # NSGlobalDomain NSWindowShouldDragOnGesture: unset
-# NSGlobalDomain AppleWindowTabbingMode: unset
+defaults write NSGlobalDomain AppleWindowTabbingMode -string manual
 # NSGlobalDomain AppleActionOnDoubleClick: unset
 defaults write NSGlobalDomain AppleMiniaturizeOnDoubleClick -bool false
 # NSGlobalDomain CGDisableCursorLocationMagnification: unset
@@ -94,8 +94,8 @@ defaults write com.apple.finder ShowPathbar -bool true
 defaults write com.apple.finder ShowStatusBar -bool true
 # Search the current folder by default, not the whole Mac
 defaults write com.apple.finder FXDefaultSearchScope -string SCcf
-# com.apple.finder FXEnableExtensionChangeWarning: unset
-# com.apple.finder _FXShowPosixPathInTitle: unset
+defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
 # Folders sort to the top, then files
 defaults write com.apple.finder _FXSortFoldersFirst -bool true
 # Don't litter network shares / USB drives with .DS_Store
@@ -106,8 +106,8 @@ defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
 defaults write com.apple.menuextra.clock Show24Hour -bool true
 defaults write com.apple.menuextra.clock ShowDate -int 0
 defaults write com.apple.menuextra.clock ShowDayOfWeek -bool true
-# com.apple.menuextra.clock IsAnalog: unset
-# com.apple.menuextra.clock FlashDateSeparators: unset
+defaults write com.apple.menuextra.clock IsAnalog -bool false
+defaults write com.apple.menuextra.clock FlashDateSeparators -bool false
 
 # === Screenshots ===
 defaults write com.apple.screencapture target -string clipboard
