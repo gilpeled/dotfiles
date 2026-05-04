@@ -77,9 +77,23 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
+
+# zsh-syntax-highlighting: render valid commands in white (default is green)
+ZSH_HIGHLIGHT_STYLES[command]='fg=white'
+ZSH_HIGHLIGHT_STYLES[builtin]='fg=white'
+ZSH_HIGHLIGHT_STYLES[alias]='fg=white'
+ZSH_HIGHLIGHT_STYLES[function]='fg=white'
+ZSH_HIGHLIGHT_STYLES[precommand]='fg=white'
+ZSH_HIGHLIGHT_STYLES[hashed-command]='fg=white'
+
+# Alt+Left / Alt+Right: jump word-by-word (covers iTerm2's two common modes)
+bindkey "^[[1;3D" backward-word
+bindkey "^[[1;3C" forward-word
+bindkey "^[b"     backward-word
+bindkey "^[f"     forward-word
 
 # User configuration
 
