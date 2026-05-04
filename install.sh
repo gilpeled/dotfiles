@@ -411,11 +411,14 @@ Then, in the fresh shell, do the manual TODOs:
        - Mounty         (Disk / Full Disk Access)
        - 1Password      (Auto-fill)
   5. Launch `aerospace` once manually so it requests permissions.
-  6. Log out and back in (or reboot). Some macOS defaults written by
+  6. Install Google Calendar as a Chrome PWA: open calendar.google.com in
+     Chrome → menu → Cast/Save/Share → "Install page as app". Chrome doesn't
+     expose a non-interactive install flag, so this step is manual.
+  7. Log out and back in (or reboot). Some macOS defaults written by
      this run (keyboard repeat rate, etc.) are only loaded by the
      HID/WindowServer layer at login — they won't take effect until
      the session is rebuilt.
-  7. (Optional) Run `p10k configure` to re-customize the prompt.
+  8. (Optional) Run `p10k configure` to re-customize the prompt.
      The `.p10k.zsh` file is checked in; this is only if you want to change it.
 ============================================================
 EOF
