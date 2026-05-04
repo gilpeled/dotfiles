@@ -250,3 +250,9 @@ f = 'DELL P2419H'
 # See https://nikitabobko.github.io/AeroSpace/guide#on-window-detected-callbacks
 # and https://github.com/anatoli-tsinovoy/dotfiles for examples.
 # ============================================================
+
+# Float Finder so Cmd-T (which spawns a real NSWindow per tab) doesn't
+# split the workspace tile every time a new tab is added.
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = ['layout floating']

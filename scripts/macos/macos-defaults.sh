@@ -46,7 +46,7 @@ defaults write com.apple.driver.AppleBluetoothMultitouch.trackpad TrackpadThreeF
 # === UI & Windows ===
 # NSGlobalDomain NSAutomaticWindowAnimationsEnabled: unset
 # NSGlobalDomain NSWindowShouldDragOnGesture: unset
-defaults write NSGlobalDomain AppleWindowTabbingMode -string always
+defaults write NSGlobalDomain AppleWindowTabbingMode -string manual
 # NSGlobalDomain AppleActionOnDoubleClick: unset
 defaults write NSGlobalDomain AppleMiniaturizeOnDoubleClick -bool false
 # NSGlobalDomain CGDisableCursorLocationMagnification: unset
@@ -92,6 +92,9 @@ defaults write com.apple.WindowManager HideDesktop -bool true
 # === Finder ===
 defaults write com.apple.finder ShowPathbar -bool true
 defaults write com.apple.finder ShowStatusBar -bool true
+# New Finder windows/tabs open at $HOME (PfHm) instead of the default "Recents"
+defaults write com.apple.finder NewWindowTarget -string PfHm
+defaults write com.apple.finder NewWindowTargetPath -string "file://${HOME}/"
 # Search the current folder by default, not the whole Mac
 defaults write com.apple.finder FXDefaultSearchScope -string SCcf
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
