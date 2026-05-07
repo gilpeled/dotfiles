@@ -173,4 +173,21 @@ export PATH="$HOME/.local/bin:$PATH"
 # manipulation can shadow it. _ZO_DOCTOR will warn if anything follows.
 eval "$(zoxide init zsh --cmd cd)"
 
+# If Enter is pressed on a single bare word that isn't a known
+# command/alias/function/builtin, rewrite it to `cd <word>` so zoxide gets a
+# shot. Lets bare `dotfiles` / `simp` jump like `cd dotfiles` / `cd simp`.
+# (zsh's command_not_found_handler runs in a forked child, so a `cd` inside
+# it can't persist — has to happen at the ZLE layer instead.)
+__autocd_accept_line() {
+  emulate -L zsh
+  local words=(${(z)BUFFER})
+  if (( ${#words} == 1 )) \
+    && [[ ${words[1]} != -* && ${words[1]} != */* ]] \
+    && ! command -v -- "${words[1]}" >/dev/null 2>&1; then
+    BUFFER="cd ${words[1]}"
+  fi
+  zle .accept-line
+}
+zle -N accept-line __autocd_accept_line
+
 eval $(thefuck --alias)
