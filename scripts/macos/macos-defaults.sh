@@ -17,6 +17,8 @@ defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false
 defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 15
 defaults write NSGlobalDomain AppleKeyboardUIMode -int 0
+# F-row defaults to media keys (brightness/volume); Fn flips to F1/F2/...
+defaults write NSGlobalDomain com.apple.keyboard.fnState -bool false
 # Auto-correct / smart-quotes / smart-dashes / auto-cap all OFF (annoying in code)
 defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false

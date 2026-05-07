@@ -62,6 +62,8 @@ echo "defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false"
 emit_int    NSGlobalDomain KeyRepeat
 emit_int    NSGlobalDomain InitialKeyRepeat
 emit_int    NSGlobalDomain AppleKeyboardUIMode
+echo "# F-row defaults to media keys (brightness/volume); Fn flips to F1/F2/..."
+emit_bool   NSGlobalDomain com.apple.keyboard.fnState
 echo "# Auto-correct / smart-quotes / smart-dashes / auto-cap all OFF (annoying in code)"
 emit_bool   NSGlobalDomain NSAutomaticCapitalizationEnabled
 emit_bool   NSGlobalDomain NSAutomaticDashSubstitutionEnabled
