@@ -7,6 +7,7 @@ tap "oven-sh/bun"
 tap "felixkratz/formulae"
 
 ### Formulas
+brew "awscli"
 brew "bat"
 brew "btop"
 brew "dua-cli"
