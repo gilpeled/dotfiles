@@ -74,12 +74,15 @@ automatically-unhide-macos-hidden-apps = true
 7 = 'Built-in Retina Display'
 8 = 'Built-in Retina Display'
 9 = 'Built-in Retina Display'
-a = 'DELL P2422H'   # left external
-b = 'DELL P2422H'
-c = 'DELL P2422H'
-d = 'DELL P2419H'   # right external
-e = 'DELL P2419H'
-f = 'DELL P2419H'
+# Work: a-c on left external, d-f on right external.
+# WFH (1 extra monitor): all a-f fall back to the WFH display.
+# First connected pattern wins.
+a = ['DELL P2422H', 'DELL P2425D']   # left external at work; WFH monitor as fallback
+b = ['DELL P2422H', 'DELL P2425D']
+c = ['DELL P2422H', 'DELL P2425D']
+d = ['DELL P2419H', 'DELL P2425D']   # right external at work; WFH monitor as fallback
+e = ['DELL P2419H', 'DELL P2425D']
+f = ['DELL P2419H', 'DELL P2425D']
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
