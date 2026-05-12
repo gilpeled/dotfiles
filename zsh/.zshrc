@@ -191,3 +191,4 @@ __autocd_accept_line() {
 zle -N accept-line __autocd_accept_line
 
 eval $(thefuck --alias)
+source /Users/gilpeled/.safe-chain/scripts/init-posix.sh # Safe-chain Zsh initialization script
