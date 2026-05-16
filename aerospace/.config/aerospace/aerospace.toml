@@ -259,3 +259,44 @@ f = ['DELL P2419H', 'DELL P2425D']
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
 run = ['layout floating']
+
+# Default workspace per app. Applied on window creation (including after
+# restart/relaunch). Order matters only for overlapping rules — first match wins.
+
+[[on-window-detected]]
+if.app-id = 'com.googlecode.iterm2'
+run = ['move-node-to-workspace a']
+
+[[on-window-detected]]
+if.app-id = 'com.todesktop.230313mzl4w4u92'  # Cursor
+run = ['move-node-to-workspace e']
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = ['move-node-to-workspace f']
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = ['move-node-to-workspace 8']
+
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+run = ['move-node-to-workspace 9']
+
+# Google Calendar PWA — separate bundle id from regular Chrome, so this
+# rule must come BEFORE the generic Chrome rules below.
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome.app.kjbdgfilnfhdoflbpgamdcdgpehopbep'
+run = ['move-node-to-workspace 3']
+
+# Chrome work profile — titles include "(hellosimply.com)" — → workspace 1.
+# Must come before the personal fallback (first match wins).
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+if.window-title-regex-substring = '\(hellosimply\.com\)'
+run = ['move-node-to-workspace 1']
+
+# Chrome personal profile (no org suffix) → workspace 2.
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = ['move-node-to-workspace 2']
