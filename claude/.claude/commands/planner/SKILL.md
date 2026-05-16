@@ -46,3 +46,16 @@ How to confirm the task is complete. Observable facts, not feelings. "The X test
 - If the Mapper flagged unknowns, address them in the plan: either note that the Coder must verify before proceeding, or mark the step as blocked and surface it to the Manager.
 - Prefer the simplest plan. Fewer steps is better. Do not add steps for things that are already handled or don't need changing.
 - The plan is a contract. The Verifier will check the output against it.
+
+## Learned rules
+
+### 2026-04-13 — No "if/else escape clauses" in steps
+**What happened:** Plan steps for the AR animation feature contained branches like "if no in-repo seed exists, document this as a gap" and "find the per-item AR decoration. Likely lives in X or Y" — the Coder took the "document and move on" path on both, producing a half-complete feature.
+**Root cause of the mistake:** Steps that offer the Coder a "report instead of do" branch turn execution into reporting. Hedge-language ("likely", "if it exists", "document as gap") signals "this is optional" even when the goal is shipping.
+**Rule:** Every step must specify what to DO. Forbidden patterns:
+- "if X exists, do Y, else document/skip" → resolve the conditional at planning time. Either the Coder needs to verify X first (then make it a separate prior step), or the answer is known and the step states one action.
+- "Likely lives in [file]" → either you confirmed the file (state it as fact) or you didn't (the Mapper needs to). No "likely."
+- "Document as a gap" as a fallback → real gaps are surfaced to the Manager BEFORE planning completes, not delegated to the Coder.
+- "Surface as a TODO/Observation" as a substitute for execution → only valid when the Manager explicitly defers something out of scope; not a default escape.
+
+If a step might reasonably go either way, it's not yet a step — it's a Manager decision. Push it back.
