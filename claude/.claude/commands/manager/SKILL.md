@@ -90,7 +90,7 @@ Same rule for agents you spawn: instruct them to NEVER assume user actions when 
 
 ## Core principles (from working style)
 
-Before doing anything, read `my-working-style/SKILL.md`. Every decision you make — and every instruction you give to agents — must be consistent with those principles. The most important ones:
+Before doing anything, read `working-style/SKILL.md`. Every decision you make — and every instruction you give to agents — must be consistent with those principles. The most important ones:
 
 - Simple over clever
 - Root cause, never patches
@@ -216,7 +216,7 @@ For each mistake, add a rule to the relevant agent's skill file:
 **Rule:** [The specific thing the agent must do differently from now on]
 ```
 
-Add the rule to the **most specific** skill file where it applies. A SwiftUI layout mistake goes in the Coder skill. A missed async boundary goes in the Tracer skill. A wrong SDK assumption goes in the Mapper skill. Only add it to `my-working-style` if it's a general principle that all agents should follow.
+Add the rule to the **most specific** skill file where it applies. A SwiftUI layout mistake goes in the Coder skill. A missed async boundary goes in the Tracer skill. A wrong SDK assumption goes in the Mapper skill. Only add it to `working-style` if it's a general principle that all agents should follow.
 
 Review the learned rules periodically and consolidate patterns — if the same type of mistake happens three times, the rule needs to be stronger or earlier in the pipeline.
 
@@ -264,7 +264,7 @@ You coordinate. You judge. You communicate. You learn.
 
 ## Agent skill file locations
 
-- `my-working-style/SKILL.md` — foundation, read first
+- `working-style/SKILL.md` — foundation, read first
 - `interviewer/SKILL.md` — user-facing, pre-planning
 - `mapper/SKILL.md`
 - `planner/SKILL.md`
