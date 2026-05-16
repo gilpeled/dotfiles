@@ -1,7 +1,24 @@
+# macOS Finder metadata
 .DS_Store
+
+# Vim swap files
 *.swp
+
+# Generic backup files (editors, opencode runtime, etc.)
 *.bak.*
+
+# Node dependency dirs
 node_modules/
+
+# opencode regenerates this when it installs plugins; not config we own
 opencode/**/package-lock.json
+
+# Convention for machine-local overrides not meant to be shared
 *.local
+
+# Claude Code auto-writes .claude/settings.local.json when you approve permissions
+# interactively. *.local above doesn't catch it (pattern is .local-suffix, not .local.json)
+.claude/
+
+# install.sh stashes pre-existing dotfiles into ~/.dotfiles-backup-<timestamp>/
 .dotfiles-backup-*
