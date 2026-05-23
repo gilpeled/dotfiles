@@ -119,6 +119,21 @@ repos:
 
 Note: pre-commit hooks here are all `--check` / `--no-fix` mode. Mutating happens in the Claude Code hook layer (on Write/Edit) or by hand. Pre-commit is a *gate*, not an *editor*.
 
+#### Notebooks (only if the project uses `.ipynb`)
+
+Ruff handles `.ipynb` natively — no extra ruff config needed; the same `ruff check` / `ruff format` commands above apply per-cell. The Claude Code + opencode hooks also fire on `NotebookEdit`. Two optional adjuncts worth offering if the user confirms notebook-heavy work:
+
+- **`nbstripout`** — pre-commit hook that strips cell outputs before commit. Eliminates noisy diffs from re-executing cells. Add to `.pre-commit-config.yaml`:
+  ```yaml
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.7.1
+    hooks:
+      - id: nbstripout
+  ```
+- **`jupytext`** — pairs each `.ipynb` with a `.py` representation so git can show real diffs. Heavier choice (every notebook now has two files); only worth it for serious notebook work or when reviewers need readable diffs.
+
+Don't add either by default — ask first.
+
 ### 4. `AGENTS.md` skeleton
 
 ```markdown

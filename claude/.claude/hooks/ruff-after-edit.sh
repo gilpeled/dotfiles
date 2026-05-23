@@ -38,13 +38,14 @@ has_ruff_config() {
 has_ruff_config || exit 0
 
 input="$(cat)"
-file_path="$(printf '%s' "$input" | jq -r '.tool_input.file_path // ""')"
+# NotebookEdit uses notebook_path; Write/Edit use file_path.
+file_path="$(printf '%s' "$input" | jq -r '.tool_input.file_path // .tool_input.notebook_path // ""')"
 
 [[ -z "$file_path" ]] && exit 0
-[[ "$file_path" == *.py ]] || exit 0
+[[ "$file_path" == *.py || "$file_path" == *.ipynb ]] || exit 0
 [[ -f "$file_path" ]] || exit 0
 
-# 1. Proto fast-path — silent skip. Universal convention.
+# 1. Proto fast-path — silent skip. Universal convention, .py only.
 case "$file_path" in
   *_pb2.py|*_pb2_grpc.py|*_pb2.pyi) exit 0 ;;
 esac

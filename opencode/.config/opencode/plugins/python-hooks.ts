@@ -101,10 +101,12 @@ export const PythonHooksPlugin: Plugin = async ({ directory, $ }) => {
       const filePath =
         (typeof args?.filePath === "string" && args.filePath) ||
         (typeof args?.file_path === "string" && args.file_path) ||
+        (typeof args?.notebookPath === "string" && args.notebookPath) ||
+        (typeof args?.notebook_path === "string" && args.notebook_path) ||
         ""
-      if (!filePath || !filePath.endsWith(".py")) return
+      if (!filePath || (!filePath.endsWith(".py") && !filePath.endsWith(".ipynb"))) return
 
-      // 1. Proto fast-path — silent skip.
+      // 1. Proto fast-path — silent skip. .py only.
       if (PROTO_PATTERNS.some((re) => re.test(filePath))) return
 
       // 2. Header marker — skip + log hint.
