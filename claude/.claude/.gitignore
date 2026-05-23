@@ -11,3 +11,7 @@
 !settings.json
 !commands/
 !commands/**
+!hooks/
+!hooks/**
+!skills/
+!skills/**

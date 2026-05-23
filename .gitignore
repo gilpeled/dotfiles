@@ -19,6 +19,10 @@ opencode/**/package-lock.json
 # Claude Code auto-writes .claude/settings.local.json when you approve permissions
 # interactively. *.local above doesn't catch it (pattern is .local-suffix, not .local.json)
 .claude/
+# …except for the stow package that owns ~/.claude. Its own .gitignore decides
+# what's tracked inside it.
+!claude/.claude/
+!claude/.claude/**
 
 # install.sh stashes pre-existing dotfiles into ~/.dotfiles-backup-<timestamp>/
 .dotfiles-backup-*

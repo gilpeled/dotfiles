@@ -12,3 +12,5 @@
 !oh-my-openagent.json
 !package.json
 !bun.lock
+!plugins/
+!plugins/**

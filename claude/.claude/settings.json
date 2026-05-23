@@ -11,5 +11,29 @@
   "statusLine": {
     "type": "command",
     "command": "sh /Users/gilpeled/.claude/statusline-command.sh"
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME\"/.claude/hooks/enforce-uv.sh"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"$HOME\"/.claude/hooks/ruff-after-edit.sh"
+          }
+        ]
+      }
+    ]
   }
 }
