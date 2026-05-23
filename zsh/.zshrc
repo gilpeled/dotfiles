@@ -99,8 +99,10 @@ bindkey "^[f"     forward-word
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# Force English for messages/dates while keeping Israeli region defaults
+export LANG=en_US.UTF-8
+export LC_TIME=en_US.UTF-8
+export LC_MESSAGES=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
