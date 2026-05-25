@@ -2,8 +2,8 @@
   "$schema": "https://opencode.ai/config.json",
   "small_model": "google/gemini-3.1-flash-lite-preview",
   "plugin": [
-    "oh-my-openagent@latest",
-    "opencode-openai-codex-auth@latest"
+    "opencode-openai-codex-auth@latest",
+    "oh-my-openagent"
   ],
   "disabled_providers": [
     "anthropic",
@@ -34,6 +34,15 @@
         ".py",
         ".pyi",
         ".ipynb"
+      ]
+    },
+    "marksman": {
+      "command": [
+        "marksman",
+        "server"
+      ],
+      "extensions": [
+        ".md"
       ]
     }
   },
