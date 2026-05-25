@@ -1,0 +1,10 @@
+{
+  "Profiles": [
+    {
+      "Name": "Numeric Keypad",
+      "Guid": "numeric-keypad-dotfiles",
+      "Dynamic Profile Parent Name": "Default",
+      "Application Keypad Allowed": false
+    }
+  ]
+}
