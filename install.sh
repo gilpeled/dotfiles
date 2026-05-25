@@ -9,7 +9,7 @@ TIMESTAMP="$(date +%Y%m%d-%H%M%S)"
 BACKUP_DIR="$HOME/.dotfiles-backup-$TIMESTAMP"
 
 # Stow packages mirroring $HOME (top-level dirs in $SCRIPT_DIR)
-STOW_PACKAGES=(zsh git tmux glow aerospace opencode iterm2 claude)
+STOW_PACKAGES=(zsh git tmux glow aerospace opencode iterm2 claude npm bun)
 
 log_info() { echo "ℹ️  $*"; }
 log_ok()   { echo "✅ $*"; }

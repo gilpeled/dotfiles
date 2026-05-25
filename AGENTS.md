@@ -111,6 +111,26 @@ install_foo() {
 3. **Idempotent** — every install step checks before doing.
 4. **Don't over-engineer** — no Linux/container branches; this repo is mac-only.
 5. **Match log-helper style** — emoji-prefixed `log_info`/`log_ok`/`log_warn`/`log_skip`.
+6. **Don't bypass supply-chain guards** — see next section.
+
+## Supply-chain guards (DO NOT bypass)
+
+`~/.npmrc` (`min-release-age=7`) and `~/.bunfig.toml` (`minimumReleaseAge = 604800`) make npm/bun refuse to install package versions younger than 7 days. This is a deliberate quarantine against acute npm/bun supply-chain attacks (Shai-Hulud, chalk/debug, etc.) — most malicious releases get unpublished within 24–72h, so the wait catches them before they land on this machine. Layered on top of `safe-chain` (`~/.safe-chain/`), which blocks known-bad packages reactively.
+
+**Hard rules for agents working in this repo or any project on this machine:**
+
+- **NEVER pass any of these flags** without the human explicitly typing the override themselves in the same session:
+  - `--min-release-age=0` (or any value lower than the configured default), `--before=<date>` on `npm`
+  - `--minimum-release-age=0` (or any value lower than the configured default) on `bun`
+  - `--config=minimumReleaseAge=0` or `--config minimum-release-age=...` on `pnpm`
+  - `UV_EXCLUDE_NEWER` or `--exclude-newer` set forward of today on `uv`
+- **NEVER edit `npm/.npmrc`, `bun/.bunfig.toml`, or any project-level `.npmrc` / `bunfig.toml`** to lower the age. The 7-day value is the policy; raising it is fine, lowering it requires the human.
+- **NEVER suggest "just delete `~/.npmrc`" or "skip the guard for this one install"** as a workaround when an install fails because no version passes the filter. The correct response is: stop, report the package and version that's blocked, and let the human decide.
+- **NEVER set `NPM_CONFIG_*` / `BUN_CONFIG_*` env vars** that would weaken the guard in a script, hook, or installer this repo produces.
+
+**If a guard blocks legitimate work** (e.g., a CVE patch released 2 days ago that you genuinely need): surface the situation to the human. Show the blocked version, the published date, and why the wait is the problem. Let them make the call — and if they say "go", let *them* type the override flag. Do not type it for them.
+
+The rationale: a previous wave of supply-chain incidents involved coding agents that, eager to finish a task, ran installs with override flags and dragged compromised packages onto developer machines before the human noticed. This rule exists to make sure that can't happen here.
 
 ## Common patterns
 

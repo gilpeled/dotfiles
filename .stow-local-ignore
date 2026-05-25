@@ -3,6 +3,7 @@
 (^|/)\.stow-local-ignore$
 (^|/)README\.md$
 (^|/)AGENTS\.md$
+(^|/)CLAUDE\.md$
 (^|/)LICENSE$
 (^|/)Brewfile$
 (^|/)Brewfile\.lock\.json$

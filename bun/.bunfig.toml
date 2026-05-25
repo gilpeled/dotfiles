@@ -1,0 +1,12 @@
+# Supply-chain mitigation for bun. Mirrors the npm/pnpm min-release-age
+# configured in ~/.npmrc — see npm/.npmrc in this repo for the rationale.
+#
+# `bun install` (used by opencode for its plugins, and by anything that
+# bundles JS via bun) will refuse versions younger than this. dist-tags
+# fall back to the most recent version that passes the age filter.
+#
+# To bypass for a single install: bun install --minimum-release-age=0
+
+[install]
+# Value is in SECONDS. 7 days = 604800.
+minimumReleaseAge = 604800

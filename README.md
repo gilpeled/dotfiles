@@ -63,6 +63,8 @@ Each top-level directory is a stow package — its contents mirror `$HOME`.
 | `opencode/`    | `~/.config/opencode/`          |
 | `iterm2/`      | iTerm2 prefs                   |
 | `claude/`      | `~/.claude/`                   |
+| `npm/`         | `~/.npmrc` (supply-chain guard)|
+| `bun/`         | `~/.bunfig.toml` (supply-chain guard)|
 | `shims/macos/` | `~/.local/bin/` shims          |
 
 Support directories (not stowed):
