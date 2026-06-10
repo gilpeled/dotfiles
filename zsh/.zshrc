@@ -171,6 +171,86 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
+# === Deliberate npm-global updates past the supply-chain guard ===
+# `~/.npmrc` sets `min-release-age=7` (see npm/.npmrc), so npm silently resolves
+# `@latest` down to the newest version that's ≥7 days old — which makes Claude
+# Code's auto-updater (and a plain `npm i -g`) appear to do nothing when the real
+# latest is younger than the guard window. This helper is the sanctioned escape
+# hatch for a *deliberate, human-confirmed* update: it shows the latest version's
+# age and, only if it's inside the guard window, asks before passing
+# `--min-release-age=0` for that one install. Every other package and the default
+# guard stay fully protected, and nothing here bypasses anything silently.
+npm-update() {
+  emulate -L zsh
+  setopt local_options pipefail
+  local pkg="$1"
+  if [[ -z "$pkg" ]]; then
+    print -u2 "usage: npm-update <npm-package> [extra npm install args...]"
+    return 2
+  fi
+  shift
+
+  local guard ver info age verdict
+  guard=$(grep -iE '^[[:space:]]*min-release-age[[:space:]]*=' "${NPM_CONFIG_USERCONFIG:-$HOME/.npmrc}" 2>/dev/null \
+            | tail -1 | sed -E 's/.*=[[:space:]]*//; s/[[:space:]]*$//')
+  [[ -z "$guard" ]] && guard=0
+
+  ver=$(npm view "$pkg" version 2>/dev/null)
+  if [[ -z "$ver" ]]; then
+    print -u2 "✗ couldn't fetch latest version for $pkg (no such package, or npm unreachable)"
+    return 1
+  fi
+
+  # Decide whether the latest release is still inside the guard window. JSON comes
+  # in on stdin (a pipe, NOT a heredoc) so json.load(sys.stdin) reads npm's output;
+  # the script is single-quoted, so it must contain no single quotes.
+  info=$(npm view "$pkg@$ver" time --json 2>/dev/null | python3 -c '
+import sys, json, datetime
+ver, guard = sys.argv[1], float(sys.argv[2])
+t = json.load(sys.stdin)[ver]
+pub = datetime.datetime.fromisoformat(t.replace("Z", "+00:00"))
+age = (datetime.datetime.now(datetime.timezone.utc) - pub).total_seconds() / 86400
+verdict = "YOUNG" if age < guard else "OK"
+print(f"{int(age)} {verdict}")
+' "$ver" "$guard") || { print -u2 "✗ couldn't determine release age for $pkg@$ver"; return 1; }
+  age=${info%% *}
+  verdict=${info##* }
+
+  if [[ "$verdict" == OK ]]; then
+    print "ℹ️  $pkg $ver is ${age}d old (≥ ${guard}d guard) — installing"
+    npm install -g "$pkg@latest" "$@"
+    return
+  fi
+
+  print "⚠️  $pkg $ver was published ${age}d ago — younger than your ${guard}d supply-chain guard."
+  print -n "    Update anyway? This bypasses the guard for this one install [y/N] "
+  local reply
+  read -r reply
+  if [[ "$reply" == (y|Y|yes|YES) ]]; then
+    print "ℹ️  installing $pkg@$ver with --min-release-age=0 …"
+    npm install -g "$pkg@latest" --min-release-age=0 "$@"
+  else
+    print "⏭️  skipped — staying on the currently-installed version"
+  fi
+}
+
+# Convenience wrapper for the CLI I update most by hand (package name ≠ binary).
+claude-update() { npm-update @anthropic-ai/claude-code "$@"; }
+
+# Shadow `claude` so the built-in `claude update` (which shells out to npm without
+# the override and therefore always fails against the guard) is rerouted through
+# the confirm-prompt flow above. Every other invocation hits the real binary via
+# `command`. Interactive shells only — scripts don't source this, so they get the
+# binary untouched.
+claude() {
+  if [[ "$1" == update ]]; then
+    shift
+    claude-update "$@"
+  else
+    command claude "$@"
+  fi
+}
+
 # zoxide must be initialized last — it overrides `cd`, and any later PATH
 # manipulation can shadow it. _ZO_DOCTOR will warn if anything follows.
 eval "$(zoxide init zsh --cmd cd)"
