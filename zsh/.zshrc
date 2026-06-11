@@ -251,10 +251,6 @@ claude() {
   fi
 }
 
-# zoxide must be initialized last — it overrides `cd`, and any later PATH
-# manipulation can shadow it. _ZO_DOCTOR will warn if anything follows.
-eval "$(zoxide init zsh --cmd cd)"
-
 # If Enter is pressed on a single bare word that isn't a known
 # command/alias/function/builtin, rewrite it to `cd <word>` so zoxide gets a
 # shot. Lets bare `dotfiles` / `simp` jump like `cd dotfiles` / `cd simp`.
@@ -273,4 +269,13 @@ __autocd_accept_line() {
 zle -N accept-line __autocd_accept_line
 
 eval $(thefuck --alias)
-source /Users/gilpeled/.safe-chain/scripts/init-posix.sh # Safe-chain Zsh initialization script
+
+# safe-chain wraps npm/bun/pip/uv/etc. to block installs of known-malicious
+# packages — the reactive layer beneath the min-release-age quarantine (see
+# npm/.npmrc). Guarded with -r so a missing ~/.safe-chain (e.g. a fresh machine
+# before install.sh has reinstalled it) can't break shell init.
+[ -r "$HOME/.safe-chain/scripts/init-posix.sh" ] && source "$HOME/.safe-chain/scripts/init-posix.sh"
+
+# zoxide must be initialized last — it overrides `cd`, and any later PATH
+# manipulation can shadow it. _ZO_DOCTOR will warn if anything follows.
+eval "$(zoxide init zsh --cmd cd)"

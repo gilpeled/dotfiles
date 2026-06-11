@@ -309,6 +309,39 @@ install_ai_clis() {
   fi
 }
 
+# === Stage 11c: safe-chain (supply-chain guard) ===
+# Aikido safe-chain wraps npm/bun/pip/uv/etc. to block installs of known-
+# malicious packages — the reactive layer beneath the min-release-age quarantine
+# in npm/.npmrc. The `source ~/.safe-chain/scripts/init-posix.sh` hook lives
+# (guarded) in zsh/.zshrc; here we just ensure the binary and its generated
+# scripts exist. `safe-chain setup` insists on appending its own UNguarded
+# source line to the rc file — since we manage a guarded, correctly-ordered
+# version ourselves, we strip that stray line back out so the stowed .zshrc
+# stays canonical (and zoxide stays last).
+install_safe_chain() {
+  if have safe-chain && [[ -r "$HOME/.safe-chain/scripts/init-posix.sh" ]]; then
+    log_skip "safe-chain already installed"
+    return 0
+  fi
+  if ! have npm; then
+    log_warn "npm not found — skipping safe-chain install"
+    return 0
+  fi
+  log_info "Installing safe-chain (@aikidosec/safe-chain)..."
+  run npm install -g @aikidosec/safe-chain
+  if [[ $DRY_RUN -eq 1 ]]; then
+    echo "  [dry-run] safe-chain setup  (+ strip its auto-added rc line)"
+    return 0
+  fi
+  safe-chain setup
+  # Drop the unguarded line setup appends to ~/.zshrc. Edit the real repo file,
+  # not the ~/.zshrc symlink: `sed -i` swaps in a fresh inode and would turn the
+  # symlink into a regular file, breaking stow. Our guarded `[ -r … ] && source`
+  # line starts with `[`, so this `^source …` match leaves it untouched.
+  sed -i '' -e '\#^source .*\.safe-chain/scripts/init-posix\.sh#d' "$SCRIPT_DIR/zsh/.zshrc"
+  log_ok "safe-chain installed"
+}
+
 # === Stage 12: rtk init ===
 setup_rtk() {
   if ! have rtk; then
@@ -443,6 +476,7 @@ main() {
   compile_winbounds
   apply_macos_defaults
   install_ai_clis
+  install_safe_chain
   setup_rtk
   verify_modern_cli_aliases
   verify_shell_clean
